@@ -87,7 +87,7 @@ async function run() {
       res.json(result);
     });
     //ORDER GET API
-    app.get("/allorders", async (req, res) => {
+    app.get("/admin/allorders", async (req, res) => {
       const cursor = purchaseCollection.find({});
       const result = await cursor.toArray();
       res.json(result);
@@ -126,7 +126,7 @@ async function run() {
       res.json(result);
     });
     //ADMIN PUT API
-    app.put("/users/admin", verifyToken, async (req, res) => {
+    app.put("/admin/users", verifyToken, async (req, res) => {
       const user = req.body;
       const requester = req.decodedEmail;
       if (requester) {
@@ -145,7 +145,7 @@ async function run() {
           .json({ message: "you do not have access to make admin" });
       }
     });
-    app.get("/users/:email", async (req, res) => {
+    app.get("/admin/users/:email", async (req, res) => {
       const email = req.params.email;
       const query = { email: email };
       const user = await usersCollection.findOne(query);
@@ -158,9 +158,7 @@ async function run() {
     //UPDATE Status
     app.put("/admin/allorders/:id", async (req, res) => {
       const id = req.params.id;
-
       const filter = { _id: ObjectId(id) };
-      console.log(filter);
       const options = { upsert: true };
       const updateDoc = {
         $set: {
