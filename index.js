@@ -155,8 +155,8 @@ async function run() {
       }
       res.json({ admin: isAdmin });
     });
-    //UPDATE
-    app.put("/allorders/:id", async (req, res) => {
+    //UPDATE Status
+    app.put("/admin/allorders/:id", async (req, res) => {
       const id = req.params.id;
 
       const filter = { _id: ObjectId(id) };
@@ -164,7 +164,7 @@ async function run() {
       const options = { upsert: true };
       const updateDoc = {
         $set: {
-          status: `shipping`,
+          status: "shipping",
         },
       };
       const result = await purchaseCollection.updateOne(
